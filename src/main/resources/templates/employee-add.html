@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/header :: header('Add Employee')}">
+</head>
+
+<body>
+
+<div th:replace="~{fragments/navbar :: navbar(true)}">
+</div>
+
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <h2 class="page-title mb-0">
+            Add Employee
+        </h2>
+
+        <a th:href="@{/admin/employees}"
+           class="btn btn-secondary">
+
+            Employee List
+
+        </a>
+
+    </div>
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-8">
+
+            <div class="card shadow-sm">
+
+                <div class="card-header">
+
+                    <h5 class="mb-0">
+                        Create Employee
+                    </h5>
+
+                </div>
+
+                <div class="card-body">
+
+                    <!-- Success Message -->
+
+                    <div th:if="${success}"
+                         class="alert alert-success">
+
+                        <span th:text="${success}">
+                        </span>
+
+                    </div>
+
+                    <!-- Error Message -->
+
+                    <div th:if="${error}"
+                         class="alert alert-danger">
+
+                        <span th:text="${error}">
+                        </span>
+
+                    </div>
+
+                    <form th:action="@{/admin/employees/add}"
+                          th:object="${employee}"
+                          method="post">
+
+                        <!-- Name -->
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Full Name
+                            </label>
+
+                            <input type="text"
+                                   th:field="*{name}"
+                                   class="form-control"
+                                   placeholder="Enter Employee Name">
+
+                            <small class="text-danger"
+                                   th:if="${#fields.hasErrors('name')}"
+                                   th:errors="*{name}">
+                            </small>
+
+                        </div>
+
+                        <!-- Email -->
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Email
+                            </label>
+
+                            <input type="email"
+                                   th:field="*{email}"
+                                   class="form-control"
+                                   placeholder="Enter Employee Email">
+
+                            <small class="text-danger"
+                                   th:if="${#fields.hasErrors('email')}"
+                                   th:errors="*{email}">
+                            </small>
+
+                        </div>
+
+                        <!-- Mobile -->
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Mobile Number
+                            </label>
+
+                            <input type="text"
+                                   th:field="*{mobile}"
+                                   class="form-control"
+                                   placeholder="Enter Mobile Number">
+
+                            <small class="text-danger"
+                                   th:if="${#fields.hasErrors('mobile')}"
+                                   th:errors="*{mobile}">
+                            </small>
+
+                        </div>
+
+                        <!-- Password -->
+
+                        <div class="mb-4">
+
+                            <label class="form-label">
+                                Password
+                            </label>
+
+                            <input type="password"
+                                   th:field="*{password}"
+                                   class="form-control"
+                                   placeholder="Enter Password">
+
+                            <small class="text-danger"
+                                   th:if="${#fields.hasErrors('password')}"
+                                   th:errors="*{password}">
+                            </small>
+
+                        </div>
+
+                        <div class="d-flex gap-2">
+
+                            <button type="submit"
+                                    class="btn btn-success">
+
+                                Create Employee
+
+                            </button>
+
+                            <a th:href="@{/admin/employees}"
+                               class="btn btn-outline-secondary">
+
+                                Cancel
+
+                            </a>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div th:replace="~{fragments/footer :: footer}">
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+</script>
+
+</body>
+</html>
+

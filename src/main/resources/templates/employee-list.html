@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/header :: header('Employee Management')}">
+</head>
+
+<body>
+
+<div th:replace="~{fragments/navbar :: navbar(true)}">
+</div>
+
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <h2 class="page-title mb-0">
+            Employee Management
+        </h2>
+
+        <a th:href="@{/admin/dashboard}"
+           class="btn btn-secondary">
+
+            Dashboard
+
+        </a>
+
+    </div>
+
+    <!-- Search + Actions -->
+
+    <div class="card shadow-sm mb-4">
+
+        <div class="card-body">
+
+            <div class="row g-3 align-items-center">
+
+                <div class="col-md-6">
+
+                    <form th:action="@{/admin/employees/search}"
+                          method="get">
+
+                        <div class="input-group">
+
+                            <input type="text"
+                                   name="input"
+                                   class="form-control"
+                                   placeholder="Search Employee">
+
+                            <button class="btn btn-primary"
+                                    type="submit">
+
+                                Search
+
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+                <div class="col-md-6 text-md-end">
+
+                    <a th:href="@{/admin/employees}"
+                       class="btn btn-outline-secondary">
+
+                        Reset
+
+                    </a>
+
+                    <a th:href="@{/admin/employees/add}"
+                       class="btn btn-success">
+
+                        Add Employee
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Success Message -->
+
+    <div th:if="${success}"
+         class="alert alert-success">
+
+        <span th:text="${success}">
+        </span>
+
+    </div>
+
+    <!-- Employee Table -->
+
+    <div class="card shadow-sm">
+
+        <div class="card-header">
+
+            <h5 class="mb-0">
+                Employee Records
+            </h5>
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="table-responsive">
+
+                <table class="table table-hover align-middle">
+
+                    <thead class="table-dark">
+
+                        <tr>
+
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Mobile</th>
+                            <th>Actions</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        <tr th:if="${#lists.isEmpty(employees)}">
+
+                            <td colspan="5"
+                                class="text-center">
+
+                                No Employees Found
+
+                            </td>
+
+                        </tr>
+
+                        <tr th:each="employee : ${employees}">
+
+                            <td th:text="${employee.userId}">
+                            </td>
+
+                            <td th:text="${employee.name}">
+                            </td>
+
+                            <td th:text="${employee.email}">
+                            </td>
+
+                            <td th:text="${employee.mobile}">
+                            </td>
+
+                            <td>
+
+                                <div class="d-flex gap-2 flex-wrap">
+
+                                    <a th:href="@{/admin/employees/edit/{id}(id=${employee.userId})}"
+                                       class="btn btn-sm btn-primary">
+
+                                        Edit
+
+                                    </a>
+
+                                    <a th:href="@{/admin/employees/delete/{id}(id=${employee.userId})}"
+                                       class="btn btn-sm btn-danger"
+                                       onclick="return confirm('Are you sure you want to delete this employee?')">
+
+                                        Delete
+
+                                    </a>
+
+                                    <a th:href="@{/admin/employees/assign/{id}(id=${employee.userId})}"
+                                       class="btn btn-sm btn-success">
+
+                                        Assign
+
+                                    </a>
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Pagination -->
+
+    <nav class="mt-4">
+
+        <ul class="pagination justify-content-center">
+
+            <li th:each="i : ${#numbers.sequence(0,totalPages-1)}"
+                class="page-item"
+                th:classappend="${i == currentPage} ? 'active'">
+
+                <a class="page-link"
+                   th:href="@{/admin/employees(pageNo=${i})}"
+                   th:text="${i+1}">
+                </a>
+
+            </li>
+
+        </ul>
+
+    </nav>
+
+</div>
+
+<div th:replace="~{fragments/footer :: footer}">
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+</script>
+
+</body>
+</html>
+

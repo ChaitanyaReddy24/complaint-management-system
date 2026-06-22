@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/header :: header('My Complaints')}">
+</head>
+
+<body>
+
+<div th:replace="~{fragments/navbar :: navbar(true)}">
+</div>
+
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <h2 class="page-title mb-0">
+            My Complaints
+        </h2>
+
+        <a th:href="@{/customer/dashboard}"
+           class="btn btn-secondary">
+            Dashboard
+        </a>
+
+    </div>
+
+    <!-- Success Message -->
+
+    <div th:if="${successMessage}"
+         class="alert alert-success">
+
+        <span th:text="${successMessage}">
+        </span>
+
+    </div>
+
+    <!-- Complaints Card -->
+
+    <div class="card shadow-sm">
+
+        <div class="card-header">
+
+            <h5 class="mb-0">
+                Complaint History
+            </h5>
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="table-responsive">
+
+                <table class="table table-hover align-middle">
+
+                    <thead class="table-dark">
+
+                        <tr>
+
+                            <th>ID</th>
+                            <th>Title</th>
+                            <th>Status</th>
+                            <th>Created Date</th>
+                            <th>Action</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        <tr th:if="${#lists.isEmpty(complaints)}">
+
+                            <td colspan="5"
+                                class="text-center">
+
+                                No complaints found.
+
+                            </td>
+
+                        </tr>
+
+                        <tr th:each="complaint : ${complaints}">
+
+                            <td th:text="${complaint.complaintId}">
+                            </td>
+
+                            <td th:text="${complaint.title}">
+                            </td>
+
+                            <td>
+
+                                <span th:if="${complaint.status.name() == 'OPEN'}"
+                                      class="badge status-open">
+                                    OPEN
+                                </span>
+
+                                <span th:if="${complaint.status.name() == 'ASSIGNED'}"
+                                      class="badge status-assigned">
+                                    ASSIGNED
+                                </span>
+
+                                <span th:if="${complaint.status.name() == 'IN_PROGRESS'}"
+                                      class="badge status-progress">
+                                    IN PROGRESS
+                                </span>
+
+                                <span th:if="${complaint.status.name() == 'RESOLVED'}"
+                                      class="badge status-resolved">
+                                    RESOLVED
+                                </span>
+
+                                <span th:if="${complaint.status.name() == 'CLOSED'}"
+                                      class="badge status-closed">
+                                    CLOSED
+                                </span>
+
+                            </td>
+
+                            <td th:text="${complaint.formattedCreatedDate}">
+                            </td>
+
+                            <td>
+
+                                <a th:href="@{/complaints/view(id=${complaint.complaintId})}"
+                                   class="btn btn-sm btn-primary">
+
+                                    View
+
+                                </a>
+
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div th:replace="~{fragments/footer :: footer}">
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+</script>
+
+</body>
+</html>
+

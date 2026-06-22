@@ -1,0 +1,126 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/header :: header('Complaint Details')}">
+</head>
+
+<body>
+
+	<div th:replace="~{fragments/navbar :: navbar(true)}"></div>
+
+	<div class="container mt-4">
+
+		<div class="d-flex justify-content-between align-items-center mb-4">
+
+			<h2 class="page-title mb-0">Complaint Details</h2>
+
+			<a th:href="@{/customer/dashboard}" class="btn btn-secondary">
+
+				Dashboard </a>
+
+		</div>
+
+		<div class="card shadow-sm">
+
+			<div class="card-header">
+
+				<h5 class="mb-0">Complaint Information</h5>
+
+			</div>
+
+			<div class="card-body">
+
+				<div class="table-responsive">
+
+					<table class="table table-bordered align-middle">
+
+						<tr>
+							<th width="30%">Complaint ID</th>
+							<td th:text="${complaint.complaintId}"></td>
+						</tr>
+
+						<tr>
+							<th>Title</th>
+							<td th:text="${complaint.title}"></td>
+						</tr>
+
+						<tr>
+							<th>Description</th>
+							<td th:text="${complaint.description}"></td>
+						</tr>
+
+						<tr>
+							<th>Status</th>
+
+							<td><span th:if="${complaint.status.name() == 'OPEN'}"
+								class="badge status-open"> OPEN </span> <span
+								th:if="${complaint.status.name() == 'ASSIGNED'}"
+								class="badge status-assigned"> ASSIGNED </span> <span
+								th:if="${complaint.status.name() == 'IN_PROGRESS'}"
+								class="badge status-progress"> IN PROGRESS </span> <span
+								th:if="${complaint.status.name() == 'RESOLVED'}"
+								class="badge status-resolved"> RESOLVED </span> <span
+								th:if="${complaint.status.name() == 'CLOSED'}"
+								class="badge status-closed"> CLOSED </span></td>
+
+						</tr>
+
+						<tr>
+							<th>Created Date</th>
+							<td th:text="${complaint.formattedCreatedDate}"></td>
+						</tr>
+
+						<tr>
+							<th>Updated Date</th>
+							<td th:text="${complaint.updatedDate}"></td>
+						</tr>
+
+					</table>
+
+				</div>
+
+				<div class="mt-4 d-flex gap-2 flex-wrap">
+
+					<a th:if="${complaint.status.name() == 'OPEN'}"
+						th:href="@{/complaints/edit/{id}(id=${complaint.complaintId})}"
+						class="btn btn-primary"> Edit Complaint </a> <a
+						th:if="${complaint.status.name() == 'OPEN'}"
+						th:href="@{/complaints/delete/{id}(id=${complaint.complaintId})}"
+						class="btn btn-danger"
+						onclick="return confirm('Are you sure you want to delete this complaint?')">
+
+						Delete Complaint </a>
+
+					<!-- Give Feedback -->
+
+					<a
+						th:if="${complaint.status.name() == 'RESOLVED' && !feedbackExists}"
+						th:href="@{/feedback/add/{id}(id=${complaint.complaintId})}"
+						class="btn btn-success"> Give Feedback </a>
+
+					<!-- View Feedback -->
+
+					<a th:if="${feedbackExists}"
+						th:href="@{/feedback/view/{id}(id=${complaint.complaintId})}"
+						class="btn btn-info"> View Feedback </a> <a
+						th:href="@{/complaints/my-complaints}"
+						class="btn btn-outline-secondary"> Back </a>
+
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+
+	<div th:replace="~{fragments/footer :: footer}"></div>
+
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+</script>
+
+</body>
+</html>
+

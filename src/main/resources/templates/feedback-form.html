@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/header :: header('Submit Feedback')}">
+</head>
+
+<body>
+
+<div th:replace="~{fragments/navbar :: navbar(true)}">
+</div>
+
+<div class="container mt-4">
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-8">
+
+            <div class="card shadow-sm">
+
+                <div class="card-header">
+
+                    <h4 class="mb-0">
+                        Submit Feedback
+                    </h4>
+
+                </div>
+
+                <div class="card-body">
+
+                    <form th:action="@{/feedback/save}"
+                          method="post">
+
+                        <input type="hidden"
+                               name="complaintId"
+                               th:value="${complaint.complaintId}">
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Complaint
+                            </label>
+
+                            <input type="text"
+                                   class="form-control"
+                                   th:value="${complaint.title}"
+                                   readonly>
+
+                        </div>
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Rating
+                            </label>
+
+                            <select name="rating"
+                                    class="form-select"
+                                    required>
+
+                                <option value="">
+                                    Select Rating
+                                </option>
+
+                                <option value="1">
+                                    ⭐ Poor
+                                </option>
+
+                                <option value="2">
+                                    ⭐⭐ Fair
+                                </option>
+
+                                <option value="3">
+                                    ⭐⭐⭐ Good
+                                </option>
+
+                                <option value="4">
+                                    ⭐⭐⭐⭐ Very Good
+                                </option>
+
+                                <option value="5">
+                                    ⭐⭐⭐⭐⭐ Excellent
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                        <div class="mb-4">
+
+                            <label class="form-label">
+                                Comments
+                            </label>
+
+                            <textarea name="comments"
+                                      rows="5"
+                                      class="form-control"
+                                      placeholder="Share your experience..."
+                                      required>
+                            </textarea>
+
+                        </div>
+
+                        <div class="d-flex gap-2">
+
+                            <button type="submit"
+                                    class="btn btn-primary">
+
+                                Submit Feedback
+
+                            </button>
+
+                            <a th:href="@{/complaints/view(id=${complaint.complaintId})}"
+                               class="btn btn-outline-secondary">
+
+                                Cancel
+
+                            </a>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div th:replace="~{fragments/footer :: footer}">
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+</script>
+
+</body>
+</html>

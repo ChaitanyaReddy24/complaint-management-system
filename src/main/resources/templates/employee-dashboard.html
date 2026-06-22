@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/header :: header('Employee Dashboard')}">
+</head>
+
+<body>
+
+<div th:replace="~{fragments/navbar :: navbar(false)}">
+</div>
+
+<div class="container mt-4">
+
+    <h2 class="page-title">
+        Employee Dashboard
+    </h2>
+
+    <!-- Quick Actions -->
+
+    <div class="row mb-4">
+
+        <div class="col-md-6 mb-3">
+
+            <div class="card dashboard-card shadow-sm">
+
+                <h4>My Assignments</h4>
+
+                <p>
+                    View and manage assigned complaints
+                </p>
+
+                <a href="#assignments"
+                   class="btn btn-primary">
+                    Open
+                </a>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-6 mb-3">
+
+            <div class="card dashboard-card shadow-sm">
+
+                <h4>Assignment History</h4>
+
+                <p>
+                    Track completed complaints
+                </p>
+
+                <a href="#assignments"
+                   class="btn btn-success">
+                    View
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Statistics -->
+
+    <div class="row mb-4">
+
+        <div class="col-md-6 mb-3">
+
+            <div class="card stat-card shadow-sm">
+
+                <h2 th:text="${#lists.size(assignments)}">
+                    0
+                </h2>
+
+                <p>
+                    Total Assignments
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-6 mb-3">
+
+            <div class="card stat-card shadow-sm">
+
+                <h2>
+                    <span th:text="${#lists.size(assignments)}">
+                        0
+                    </span>
+                </h2>
+
+                <p>
+                    Active Assignments
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Assignment Table -->
+
+    <div class="card shadow-sm"
+         id="assignments">
+
+        <div class="card-header">
+
+            <h5 class="mb-0">
+                Assigned Complaints
+            </h5>
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="table-responsive">
+
+                <table class="table table-hover align-middle">
+
+                    <thead class="table-dark">
+
+                        <tr>
+
+                            <th>Assignment ID</th>
+                            <th>Complaint</th>
+                            <th>Customer</th>
+                            <th>Status</th>
+                            <th>Assigned Date</th>
+                            <th>Action</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        <tr th:if="${#lists.isEmpty(assignments)}">
+
+                            <td colspan="6"
+                                class="text-center">
+
+                                No Assigned Complaints
+
+                            </td>
+
+                        </tr>
+
+                        <tr th:each="assignment : ${assignments}">
+
+                            <td th:text="${assignment.assignmentId}">
+                            </td>
+
+                            <td th:text="${assignment.complaint.title}">
+                            </td>
+
+                            <td th:text="${assignment.complaint.customer.name}">
+                            </td>
+
+                            <td>
+
+                                <span th:if="${assignment.status.name() == 'ASSIGNED'}"
+                                      class="badge status-assigned">
+                                    ASSIGNED
+                                </span>
+
+                                <span th:if="${assignment.status.name() == 'ACCEPTED'}"
+                                      class="badge status-progress">
+                                    ACCEPTED
+                                </span>
+
+                                <span th:if="${assignment.status.name() == 'COMPLETED'}"
+                                      class="badge status-resolved">
+                                    COMPLETED
+                                </span>
+
+                            </td>
+
+                            <td th:text="${assignment.formattedCreatedDate}">
+                            </td>
+
+                            <td>
+
+                                <a th:href="@{/employee/assignment/view/{id}(id=${assignment.assignmentId})}"
+                                   class="btn btn-sm btn-primary">
+
+                                    View
+
+                                </a>
+
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div th:replace="~{fragments/footer :: footer}">
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

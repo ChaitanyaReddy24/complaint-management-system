@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/header :: header('Customer Dashboard')}">
+</head>
+
+<body>
+
+<div th:replace="~{fragments/navbar :: navbar(false)}">
+</div>
+
+<div class="container mt-4">
+
+    <h2 class="page-title">
+        Customer Dashboard
+    </h2>
+
+    <!-- Quick Actions -->
+
+    <div class="row mb-4">
+
+        <div class="col-md-4 mb-3">
+
+            <div class="card dashboard-card shadow-sm">
+
+                <h4>Raise Complaint</h4>
+
+                <p>Register a new complaint</p>
+
+                <a href="#raiseComplaint"
+                   class="btn btn-primary">
+                    Open
+                </a>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4 mb-3">
+
+            <div class="card dashboard-card shadow-sm">
+
+                <h4>My Complaints</h4>
+
+                <p>Track complaint status</p>
+
+                <a th:href="@{/complaints/my-complaints}"
+                   class="btn btn-success">
+                    View
+                </a>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4 mb-3">
+
+            <div class="card dashboard-card shadow-sm">
+
+                <h4>Feedback</h4>
+
+                <p>Submit feedback for resolved complaints</p>
+
+                <a th:href="@{/complaints/my-complaints}"
+                   class="btn btn-warning">
+                    Open
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Raise Complaint Form -->
+
+    <div class="card shadow-sm mb-4"
+         id="raiseComplaint">
+
+        <div class="card-header">
+
+            <h5 class="mb-0">
+                Raise Complaint
+            </h5>
+
+        </div>
+
+        <div class="card-body">
+
+            <form th:action="@{/customer/raise}"
+                  th:object="${complaint}"
+                  method="post">
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Title
+                    </label>
+
+                    <input type="text"
+                           th:field="*{title}"
+                           class="form-control"
+                           placeholder="Enter Complaint Title">
+
+                    <small class="text-danger"
+                           th:if="${#fields.hasErrors('title')}"
+                           th:errors="*{title}">
+                    </small>
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Description
+                    </label>
+
+                    <textarea rows="5"
+                              th:field="*{description}"
+                              class="form-control"
+                              placeholder="Describe your complaint">
+                    </textarea>
+
+                    <small class="text-danger"
+                           th:if="${#fields.hasErrors('description')}"
+                           th:errors="*{description}">
+                    </small>
+
+                </div>
+
+                <button type="submit"
+                        class="btn btn-primary">
+
+                    Submit Complaint
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <!-- Recent Complaints -->
+
+    <div class="card shadow-sm">
+
+        <div class="card-header">
+
+            <h5 class="mb-0">
+                Recent Complaints
+            </h5>
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="table-responsive">
+
+                <table class="table table-hover align-middle">
+
+                    <thead class="table-dark">
+
+                        <tr>
+
+                            <th>ID</th>
+                            <th>Title</th>
+                            <th>Status</th>
+                            <th>Created Date</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        <tr th:if="${#lists.isEmpty(complaints)}">
+
+                            <td colspan="4"
+                                class="text-center">
+
+                                No complaints found.
+
+                            </td>
+
+                        </tr>
+
+                        <tr th:each="complaint : ${complaints}">
+
+                            <td th:text="${complaint.complaintId}">
+                            </td>
+
+                            <td th:text="${complaint.title}">
+                            </td>
+
+                            <td>
+
+                                <span th:if="${complaint.status.name() == 'OPEN'}"
+                                      class="badge status-open">
+                                    OPEN
+                                </span>
+
+                                <span th:if="${complaint.status.name() == 'ASSIGNED'}"
+                                      class="badge status-assigned">
+                                    ASSIGNED
+                                </span>
+
+                                <span th:if="${complaint.status.name() == 'IN_PROGRESS'}"
+                                      class="badge status-progress">
+                                    IN PROGRESS
+                                </span>
+
+                                <span th:if="${complaint.status.name() == 'RESOLVED'}"
+                                      class="badge status-resolved">
+                                    RESOLVED
+                                </span>
+
+                            </td>
+
+                            <td th:text="${complaint.formattedCreatedDate}">
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div th:replace="~{fragments/footer :: footer}">
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
+

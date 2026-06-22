@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/header :: header('Assignment Details')}">
+</head>
+
+<body>
+
+<div th:replace="~{fragments/navbar :: navbar(true)}">
+</div>
+
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <h2 class="page-title mb-0">
+            Assignment Details
+        </h2>
+
+        <a th:href="@{/employee/dashboard}"
+           class="btn btn-secondary">
+            Back to Dashboard
+        </a>
+
+    </div>
+
+    <div class="card shadow-sm">
+
+        <div class="card-header">
+
+            <h5 class="mb-0">
+                Assignment Information
+            </h5>
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="table-responsive">
+
+                <table class="table table-bordered align-middle">
+
+                    <tr>
+                        <th width="30%">Assignment ID</th>
+                        <td th:text="${assignment.assignmentId}"></td>
+                    </tr>
+
+                    <tr>
+                        <th>Complaint ID</th>
+                        <td th:text="${assignment.complaint.complaintId}"></td>
+                    </tr>
+
+                    <tr>
+                        <th>Complaint Title</th>
+                        <td th:text="${assignment.complaint.title}"></td>
+                    </tr>
+
+                    <tr>
+                        <th>Description</th>
+                        <td th:text="${assignment.complaint.description}"></td>
+                    </tr>
+
+                    <tr>
+                        <th>Customer Name</th>
+                        <td th:text="${assignment.complaint.customer.name}"></td>
+                    </tr>
+
+                    <tr>
+                        <th>Customer Email</th>
+                        <td th:text="${assignment.complaint.customer.email}"></td>
+                    </tr>
+
+                    <tr>
+                        <th>Customer Mobile</th>
+                        <td th:text="${assignment.complaint.customer.mobile}"></td>
+                    </tr>
+
+                    <tr>
+                        <th>Admin Remarks</th>
+                        <td th:text="${assignment.remarks}"></td>
+                    </tr>
+
+                    <tr>
+                        <th>Assignment Status</th>
+
+                        <td>
+
+                            <span th:if="${assignment.status.name() == 'ASSIGNED'}"
+                                  class="badge status-assigned">
+                                ASSIGNED
+                            </span>
+
+                            <span th:if="${assignment.status.name() == 'ACCEPTED'}"
+                                  class="badge status-progress">
+                                ACCEPTED
+                            </span>
+
+                            <span th:if="${assignment.status.name() == 'COMPLETED'}"
+                                  class="badge status-resolved">
+                                COMPLETED
+                            </span>
+
+                        </td>
+
+                    </tr>
+
+                    <tr>
+                        <th>Complaint Status</th>
+
+                        <td>
+
+                            <span th:if="${assignment.complaint.status.name() == 'OPEN'}"
+                                  class="badge status-open">
+                                OPEN
+                            </span>
+
+                            <span th:if="${assignment.complaint.status.name() == 'ASSIGNED'}"
+                                  class="badge status-assigned">
+                                ASSIGNED
+                            </span>
+
+                            <span th:if="${assignment.complaint.status.name() == 'IN_PROGRESS'}"
+                                  class="badge status-progress">
+                                IN PROGRESS
+                            </span>
+
+                            <span th:if="${assignment.complaint.status.name() == 'RESOLVED'}"
+                                  class="badge status-resolved">
+                                RESOLVED
+                            </span>
+
+                        </td>
+
+                    </tr>
+
+                    <tr>
+                        <th>Assigned Date</th>
+                        <td th:text="${assignment.assignedDate}"></td>
+                    </tr>
+
+                </table>
+
+            </div>
+
+            <div class="mt-4 d-flex gap-2">
+
+                <a th:if="${assignment.status.name() == 'ASSIGNED'}"
+                   th:href="@{/employee/accept/{id}(id=${assignment.assignmentId})}"
+                   class="btn btn-success">
+
+                    Accept Assignment
+
+                </a>
+
+                <a th:if="${assignment.status.name() == 'ACCEPTED'}"
+                   th:href="@{/employee/complete/{id}(id=${assignment.assignmentId})}"
+                   class="btn btn-primary">
+
+                    Mark Completed
+
+                </a>
+
+                <a th:href="@{/employee/dashboard}"
+                   class="btn btn-outline-secondary">
+
+                    Back
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div th:replace="~{fragments/footer :: footer}">
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+</script>
+
+</body>
+</html>

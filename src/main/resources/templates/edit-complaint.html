@@ -1,0 +1,104 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/header :: header('Edit Complaint')}">
+</head>
+
+<body>
+
+<div th:replace="~{fragments/navbar :: navbar(true)}">
+</div>
+
+<div class="container mt-4">
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-8">
+
+            <div class="card shadow-sm">
+
+                <div class="card-header">
+
+                    <h4 class="mb-0">
+                        Edit Complaint
+                    </h4>
+
+                </div>
+
+                <div class="card-body">
+
+                    <form th:action="@{/complaints/update}"
+                          method="post">
+
+                        <input type="hidden"
+                               name="complaintId"
+                               th:value="${complaint.complaintId}">
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Complaint Title
+                            </label>
+
+                            <input type="text"
+                                   name="title"
+                                   class="form-control"
+                                   th:value="${complaint.title}"
+                                   required>
+
+                        </div>
+
+                        <div class="mb-4">
+
+                            <label class="form-label">
+                                Complaint Description
+                            </label>
+
+                            <textarea name="description"
+                                      class="form-control"
+                                      rows="6"
+                                      required
+                                      th:text="${complaint.description}">
+                            </textarea>
+
+                        </div>
+
+                        <div class="d-flex gap-2">
+
+                            <button type="submit"
+                                    class="btn btn-primary">
+
+                                Update Complaint
+
+                            </button>
+
+                            <a th:href="@{/complaints/view(id=${complaint.complaintId})}"
+                               class="btn btn-outline-secondary">
+
+                                Cancel
+
+                            </a>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div th:replace="~{fragments/footer :: footer}">
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+</script>
+
+</body>
+</html>

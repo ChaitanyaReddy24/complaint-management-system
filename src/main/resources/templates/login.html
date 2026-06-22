@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/header :: header('CMS Login')}">
+</head>
+
+<body>
+
+	<div class="container">
+
+		<div class="row justify-content-center align-items-center"
+			style="min-height: 100vh;">
+
+			<div class="col-md-5 col-lg-4">
+
+				<div class="card shadow">
+
+					<div class="card-body p-4">
+
+						<div class="text-center mb-4">
+
+							<h2 class="fw-bold text-primary">CMS</h2>
+
+							<p class="text-muted">Complaint Management System</p>
+
+						</div>
+
+						<!-- Success Message -->
+
+						<div th:if="${success}" class="alert alert-success">
+
+							<span th:text="${success}"> </span>
+
+						</div>
+
+						<!-- Error Message -->
+
+						<div th:if="${error}" class="alert alert-danger">
+
+							<span th:text="${error}"> </span>
+
+						</div>
+
+						<form th:action="@{/login}" method="post">
+
+							<div class="mb-3">
+
+								<label class="form-label"> Email / Mobile </label> <input
+									type="text" name="username" class="form-control"
+									placeholder="Enter Email or Mobile" required>
+
+							</div>
+
+							<div class="mb-3">
+
+								<label class="form-label"> Password </label> <input
+									type="password" name="password" class="form-control"
+									placeholder="Enter Password" required>
+
+							</div>
+
+							<div class="text-end mb-3">
+
+								<a th:href="@{/forgot-password}" class="text-decoration-none">
+
+									Forgot Password? </a>
+
+							</div>
+
+							<div class="d-grid">
+
+								<button type="submit" class="btn btn-primary">Login</button>
+
+							</div>
+
+						</form>
+
+						<hr>
+
+						<div class="text-center">
+
+							<span class="text-muted"> New User? </span> <a
+								th:href="@{/register}" class="text-decoration-none fw-bold">
+
+								Register Here </a>
+
+						</div>
+
+					</div>
+
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+</script>
+
+</body>
+</html>
+

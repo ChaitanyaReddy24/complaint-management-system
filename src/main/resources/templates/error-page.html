@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/header :: header('Error')}">
+</head>
+
+<body>
+
+	<div class="container">
+
+		<div class="row justify-content-center align-items-center"
+			style="min-height: 80vh;">
+
+			<div class="col-md-6">
+
+				<div class="card shadow-lg border-0"
+     style="border-left:6px solid #dc3545;">
+
+    <div class="card-body text-center p-5">
+
+        <i class="bi bi-exclamation-triangle-fill
+                  text-danger display-1 mb-3">
+        </i>
+
+        <h1 class="text-danger"
+            th:text="${title}">
+        </h1>
+
+        <p class="lead"
+           th:text="${errorMessage}">
+        </p>
+
+        <a href="javascript:history.back()"
+           class="btn btn-secondary">
+
+            Go Back
+
+        </a>
+
+        <a th:href="@{/login}"
+           class="btn btn-primary">
+
+            Go To Login
+
+        </a>
+
+    </div>
+
+</div>
+
+			</div>
+
+		</div>
+
+	</div>
+
+</body>
+</html>
+

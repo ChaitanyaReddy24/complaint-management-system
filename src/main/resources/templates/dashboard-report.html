@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/header :: header('Dashboard Reports')}">
+</head>
+
+<body>
+
+<div th:replace="~{fragments/navbar :: navbar(true)}">
+</div>
+
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <h2 class="page-title mb-0">
+            Dashboard Reports
+        </h2>
+
+        <a th:href="@{/admin/dashboard}"
+           class="btn btn-secondary">
+
+            Back to Dashboard
+
+        </a>
+
+    </div>
+
+    <!-- Statistics Cards -->
+
+    <div class="row g-4">
+
+        <div class="col-md-3">
+            <div class="card stat-card shadow-sm">
+                <h2 th:text="${report.totalComplaints}">0</h2>
+                <p>Total Complaints</p>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card stat-card shadow-sm">
+                <h2 th:text="${report.openComplaints}">0</h2>
+                <p>Open Complaints</p>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card stat-card shadow-sm">
+                <h2 th:text="${report.assignedComplaints}">0</h2>
+                <p>Assigned Complaints</p>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card stat-card shadow-sm">
+                <h2 th:text="${report.inProgressComplaints}">0</h2>
+                <p>In Progress</p>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card stat-card shadow-sm">
+                <h2 th:text="${report.resolvedComplaints}">0</h2>
+                <p>Resolved Complaints</p>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card stat-card shadow-sm">
+                <h2 th:text="${report.totalEmployees}">0</h2>
+                <p>Total Employees</p>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card stat-card shadow-sm">
+                <h2 th:text="${report.totalFeedbacks}">0</h2>
+                <p>Total Feedbacks</p>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card stat-card shadow-sm">
+
+                <h2 th:text="${#numbers.formatDecimal(report.averageRating,1,2)}">
+                    0.00
+                </h2>
+
+                <p>Average Rating</p>
+
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Summary Section -->
+
+    <div class="card shadow-sm mt-5">
+
+        <div class="card-header">
+
+            <h5 class="mb-0">
+                System Summary
+            </h5>
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="table-responsive">
+
+                <table class="table table-bordered align-middle">
+
+                    <tr>
+                        <th width="40%">Total Complaints</th>
+                        <td th:text="${report.totalComplaints}"></td>
+                    </tr>
+
+                    <tr>
+                        <th>Resolved Complaints</th>
+                        <td th:text="${report.resolvedComplaints}"></td>
+                    </tr>
+
+                    <tr>
+                        <th>Total Employees</th>
+                        <td th:text="${report.totalEmployees}"></td>
+                    </tr>
+
+                    <tr>
+                        <th>Total Feedbacks</th>
+                        <td th:text="${report.totalFeedbacks}"></td>
+                    </tr>
+
+                    <tr>
+                        <th>Average Customer Rating</th>
+
+                        <td>
+
+                            <span class="badge bg-warning text-dark fs-6">
+
+                                <span th:text="${#numbers.formatDecimal(report.averageRating,1,2)}">
+                                </span>
+
+                            </span>
+
+                        </td>
+
+                    </tr>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div th:replace="~{fragments/footer :: footer}">
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+</script>
+
+</body>
+</html>
